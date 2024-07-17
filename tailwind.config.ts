@@ -14,6 +14,7 @@ const config: Config = {
         Josefin: ["var(--front-Josefin)"],
       },
       backgroundImage: {
+        'custom-gradient': 'linear-gradient(135deg, #010313, #010313, #24243e)',
         "gradient-radial": "radial-gradient(var--tw-gradient-stops)",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%,var(--tw-gradient-stops))",

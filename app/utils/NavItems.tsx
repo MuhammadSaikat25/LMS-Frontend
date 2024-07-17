@@ -27,6 +27,10 @@ const NavLinkData = [
     name: "Police",
     path: "/police",
   },
+  {
+    name: "Login",
+    path: "/login",
+  },
 ];
 
 const NavItems: FC<Props> = ({ activeItem, isMobile }) => {
