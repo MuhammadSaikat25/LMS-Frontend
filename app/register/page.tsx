@@ -1,45 +1,70 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import img from "../../public/login.png";
 import Link from "next/link";
+import { useRegistrationMutation } from "../redux/feature/auth/authApi";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+
+  const [registration, { data }] = useRegistrationMutation();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await registration({ email, password, name });
+    router.push("/login");
+  };
+
+  console.log(data);
   return (
     <div className="bg-custom-gradient h-screen relative">
-      <form className="bg-[#010313] z-50 left-[80px] bottom-[400px] lg:bg-[#080826] p-10 rounded-md absolute lg:left-[130px] lg:bottom-[260px] ">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-[#010313] z-50 left-[80px] bottom-[400px] lg:bg-[#080826] p-10 rounded-md absolute lg:left-[130px] lg:bottom-[260px]"
+      >
         <h1 className="text-[#E8AAFF] text-3xl font-Poppins font-semibold mb-3">
-        SignUp
+          SignUp
         </h1>
         <div className="flex flex-col gap-6">
           <input
+            onChange={(e) => setName(e.target.value)}
             type="text"
             className="bg-[#131237] rounded-md p-2 md:w-[300px] lg:w-[400px]"
             placeholder="Name"
+            required
           />
           <input
+            onChange={(e) => setEmail(e.target.value)}
             type="email"
             className="bg-[#131237] rounded-md p-2 md:w-[300px] lg:w-[400px]"
             placeholder="Email"
+            required
           />
           <input
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
             className="bg-[#131237] rounded-md p-2 lg:w-[400px]"
             placeholder="Password"
+            required
           />
-          <button className="text-[#E8AAFF] border border-blue-700 rounded  p-1 hover:bg-[#7D58EB] duration-500 font-Poppins font-semibold mb-3">
+          <button className="text-[#E8AAFF] border border-blue-700 rounded p-1 hover:bg-[#7D58EB] duration-500 font-Poppins font-semibold mb-3">
             Register
           </button>
         </div>
         <div className="flex items-center gap-3 justify-center">
           <h1>Already have an account?</h1>
-          <Link href={"/login"} className="text-violet-600">
+          <Link href="/login" className="text-violet-600">
             Login
           </Link>
         </div>
       </form>
-      {/* -------------- image --------------- */}
       <Image
-        className="h-full absolute z-10 lg:z-50 lg:right-0  "
+        className="h-full absolute z-10 lg:z-50 lg:right-0"
         src={img}
         alt="Login Image"
       />
