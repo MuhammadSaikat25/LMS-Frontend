@@ -20,7 +20,6 @@ const Register = () => {
     router.push("/login");
   };
 
-  console.log(data);
   return (
     <div className="bg-custom-gradient h-screen relative">
       <form

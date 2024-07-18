@@ -5,17 +5,25 @@ import img from "../../public/login.png";
 import Link from "next/link";
 import { useLoginMutation } from "../redux/feature/auth/authApi";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "../redux/hooks";
+import { setUser } from "../redux/feature/auth/authSlice";
+import verifyToken from "../utils/verifyToken";
 
 const Login = () => {
   const router = useRouter();
-
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login, { data }] = useLoginMutation();
-  const handelSubmit = (e: any) => {
+  const [login] = useLoginMutation();
+
+  const handelSubmit = async (e: any) => {
     e.preventDefault();
-    login({ email, password });
+
+    const res = await login({ email, password });
+    console.log(res.data.token);
+    const user = await verifyToken(res.data.token);
     router.push("/");
+    dispatch(setUser({ user, token: res?.data?.token }));
   };
 
   return (

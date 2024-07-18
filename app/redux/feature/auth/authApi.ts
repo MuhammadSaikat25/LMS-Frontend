@@ -1,5 +1,5 @@
 import { baseApi } from "../api/baseApi";
-import { registration } from "./authSlice";
+
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,18 +10,6 @@ const authApi = baseApi.injectEndpoints({
         body: userInfo,
         credentials: "include",
       }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        try {
-          const result = await queryFulfilled;
-          dispatch(
-            registration({
-              token: result.data.token,
-            })
-          );
-        } catch (error) {
-          console.log(error);
-        }
-      },
     }),
     registration: builder.mutation({
       query: (userInfo) => {
