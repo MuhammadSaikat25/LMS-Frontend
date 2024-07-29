@@ -1,6 +1,7 @@
 "use client";
 import "./globals.css";
-import { Poppins } from "next/font/google";
+import { Poppins, Roboto } from "next/font/google";
+
 import { Josefin_Sans } from "next/font/google";
 import { Provider } from "react-redux";
 import { persistor, store } from "./redux/store";
@@ -10,6 +11,11 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--front-Poppins",
+});
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--front-roboto",
 });
 
 const josefin = Josefin_Sans({
@@ -25,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable}${josefin.variable} `}>
+      <body className={`${poppins.variable}${josefin.variable}${roboto.variable} `}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             {children}

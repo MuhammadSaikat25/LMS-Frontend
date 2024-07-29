@@ -1,8 +1,13 @@
+"use client";
 import Link from "next/link";
 import { FC } from "react";
+import { usePathname, useRouter } from "next/navigation";
+
+import { CgProfile } from "react-icons/cg";
+import { useAppSelector } from "../redux/hooks";
+import { RootState } from "../redux/store";
 
 type Props = {
-  activeItem: number;
   isMobile: boolean;
 };
 
@@ -27,13 +32,18 @@ const NavLinkData = [
     name: "Police",
     path: "/police",
   },
+
   {
     name: "Login",
     path: "/login",
   },
 ];
 
-const NavItems: FC<Props> = ({ activeItem, isMobile }) => {
+const NavItems: FC<Props> = ({ isMobile }) => {
+  const currentPath = usePathname();
+  const Router = useRouter();
+  const user = useAppSelector((state: RootState) => state.auth.user);
+
   return (
     <>
       <div className="hidden 800px:flex">
@@ -44,12 +54,12 @@ const NavItems: FC<Props> = ({ activeItem, isMobile }) => {
                 <span
                   style={{
                     background:
-                      activeItem === index
+                      currentPath === i.path
                         ? "linear-gradient(260.06deg, rgb(255, 55, 242) -4.88%, rgb(64, 90, 255) 89.47%)"
                         : "",
                   }}
-                  className={`${
-                    activeItem === index ? "p-2 rounded-md" : ""
+                  className={`font-mono ${
+                    currentPath === i.path ? "p-2 rounded-md" : ""
                   }`}
                 >
                   {i.name}
@@ -63,18 +73,27 @@ const NavItems: FC<Props> = ({ activeItem, isMobile }) => {
       {/* --------------------- mobile ------------------ */}
       {isMobile && (
         <div className="800px:hidden mt-5">
-          <div className="w-full text-center py-6">
+          <div className="w-full text-center flex flex-col gap-8 py-6">
             {NavLinkData.map((i, index) => (
               <Link key={index} href={i.path} passHref>
                 <span
-                  className={`${
-                    activeItem === index ? "bg-[#8C35EC] px-1 rounded-md" : ""
+                  className={`font-mono ${
+                    currentPath === i.path ? "bg-[#8C35EC] px-1 rounded-md" : ""
                   }`}
                 >
                   {i.name}
                 </span>
               </Link>
             ))}
+
+            {user && (
+              <CgProfile
+                color="white"
+                className="cursor-pointer mx-auto"
+                size={30}
+                onClick={() => Router.push("/Profile")}
+              />
+            )}
           </div>
         </div>
       )}

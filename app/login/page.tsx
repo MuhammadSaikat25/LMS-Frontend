@@ -12,22 +12,22 @@ import verifyToken from "../utils/verifyToken";
 const Login = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("123@gmail.com");
+  const [password, setPassword] = useState("123456");
   const [login] = useLoginMutation();
 
   const handelSubmit = async (e: any) => {
     e.preventDefault();
 
     const res = await login({ email, password });
-    console.log(res.data.token);
-    const user = await verifyToken(res.data.token);
+   
+    // const user = await verifyToken(res.data.token || "");
     router.push("/");
-    dispatch(setUser({ user, token: res?.data?.token }));
+    dispatch(setUser({ user:{}, token: res?.data?.token }));
   };
 
   return (
-    <div className="bg-custom-gradient h-screen relative">
+    <div className="bg-custom-gradient h-screen relative ov">
       <form
         onSubmit={handelSubmit}
         className="bg-[#010313] z-50 left-[80px] bottom-[400px] lg:bg-[#080826] p-10 rounded-md absolute lg:left-[130px] lg:bottom-[260px] "
@@ -37,6 +37,7 @@ const Login = () => {
         </h1>
         <div className="flex flex-col gap-6">
           <input
+          defaultValue={"123@gmail.com"}
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             className="bg-[#131237] rounded-md p-2 md:w-[300px] lg:w-[400px]"
@@ -45,6 +46,7 @@ const Login = () => {
           />
           <input
             type="password"
+            defaultValue={'123456'}
             onChange={(e) => setPassword(e.target.value)}
             className="bg-[#131237] rounded-md p-2 lg:w-[400px]"
             placeholder="Password"

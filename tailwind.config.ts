@@ -21,6 +21,7 @@ const config: Config = {
       },
       screens: {
         "1000px": "1000px",
+        "1500px": "1500px",
         "1100px": "1100px",
         "1200px": "1200px",
         "1300px": "1300px",

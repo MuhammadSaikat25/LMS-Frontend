@@ -15,13 +15,7 @@ const page: FC<Props> = (props) => {
         description="Let’s Code_Your Career"
         keyword="programming"
       />
-      <Header
-        route={route}
-        setRoute={setRoute}
-        activeItem={activeItem}
-        open={open}
-        setOpen={setOpen}
-      />
+      <Header />
     </div>
   );
 };

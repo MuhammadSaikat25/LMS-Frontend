@@ -4,17 +4,17 @@ import { FC, useState } from "react";
 import NavItems from "../utils/NavItems";
 import { CiMenuFries } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
+import { useAppSelector } from "../redux/hooks";
+import { RootState } from "../redux/store";
+import { useRouter } from "next/navigation";
 
 interface Props {
-  open: boolean;
-  setOpen: (open: boolean) => void;
   activeItem: number;
-  route: string;
-  setRoute: (route: string) => void;
 }
 
-const Header: FC<Props> = ({ activeItem, open, setOpen, route, setRoute }) => {
-  const [active, setActive] = useState(false);
+const Header: FC = () => {
+  const user = useAppSelector((state: RootState) => state.auth.user);
+  const router = useRouter();
   const [openSidebar, setOpeSideBar] = useState(false);
 
   const handelClose = (e: any) => {
@@ -37,7 +37,7 @@ const Header: FC<Props> = ({ activeItem, open, setOpen, route, setRoute }) => {
             <h1>Coding Hero</h1>
           </Link>
           <div className="lg:flex items-center gap-3">
-            <NavItems activeItem={activeItem} isMobile={false} />
+            <NavItems isMobile={false} />
             <div className="800px:hidden">
               <CiMenuFries
                 color="white"
@@ -46,7 +46,13 @@ const Header: FC<Props> = ({ activeItem, open, setOpen, route, setRoute }) => {
               />
             </div>
             <div className="hidden 800px:block">
-              <CgProfile size={20} onClick={() => setOpen(true)} />
+              {user && (
+                <CgProfile
+                  className="cursor-pointer"
+                  size={20}
+                  onClick={() => router.push("/Profile")}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -58,8 +64,9 @@ const Header: FC<Props> = ({ activeItem, open, setOpen, route, setRoute }) => {
             className="fixed w-full h-screen top-0 z-[99999] 800px:hidden"
             id="screen"
           >
-            <div className="w-[70%] fixed z-[999999999] h-screen bg-[#4446EA] dark:bg-slate-900 dark:bg-opacity-90 top-0 right-0">
-              <NavItems activeItem={activeItem} isMobile={true} />
+            <div className="w-[50%] fixed z-[999999999] h-screen bg-[#2E2960] dark:bg-slate-900 dark:bg-opacity-90 top-0 right-0">
+              <NavItems isMobile={true} />
+              
             </div>
           </div>
         )}
