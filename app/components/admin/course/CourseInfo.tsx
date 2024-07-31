@@ -7,6 +7,7 @@ type Props = {
   setActive: (active: number) => void;
   setCourseInfo: (courseInfo: any) => void;
 };
+
 const CourseInfo: FC<Props> = ({
   active,
   courseInfo,
@@ -14,11 +15,13 @@ const CourseInfo: FC<Props> = ({
   setCourseInfo,
 }) => {
   const [dragging, setDragging] = useState(false);
-  const handelSubmit = (e: any) => {
+
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     setActive(active + 1);
   };
-  const handelFile = (e: any) => {
+
+  const handleFile = (e: any) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -30,38 +33,43 @@ const CourseInfo: FC<Props> = ({
       reader.readAsDataURL(file);
     }
   };
+
   const handleDragOver = (e: any) => {
     e.preventDefault();
     setDragging(true);
   };
-  const handleDragleave = (e: any) => {
+
+  const handleDragLeave = (e: any) => {
     e.preventDefault();
     setDragging(false);
   };
+
   const handleDrop = (e: any) => {
     e.preventDefault();
     setDragging(false);
-    const file = e.dataTransfer.file?.[0];
+    const file = e.dataTransfer.files?.[0];
     if (file) {
-      const render = new FileReader();
-      render.onload = () => {
-        setCourseInfo({ ...courseInfo, thumbnail: render.result });
+      const reader = new FileReader();
+      reader.onload = () => {
+        setCourseInfo({ ...courseInfo, thumbnail: reader.result });
       };
-      render.readAsDataURL(file);
+      reader.readAsDataURL(file);
     }
   };
+
   return (
     <div className="mt-[30px] text-center">
       <h1 className="mb-5 font-m">Course Information</h1>
-      <div className="w-[80%] m-auto lg:mt-10 bg-[#080826] p-5 ">
-        <form onSubmit={handelSubmit} className="flex flex-col gap-2">
+      <div className="w-[80%] m-auto lg:mt-10 bg-[#080826] p-5">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
           <div className="lg:flex flex-col gap-2">
-            <label htmlFor="">Course Name</label>
+            <label className="text-left" htmlFor="courseName">
+              Course Name
+            </label>
             <input
               className="bg-[#131237] rounded p-1 w-full"
               type="text"
-              name=""
-              id="name"
+              id="courseName"
               placeholder="Course Name"
               required
               value={courseInfo.name}
@@ -71,13 +79,14 @@ const CourseInfo: FC<Props> = ({
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="">Course Description</label>
+            <label className="text-left" htmlFor="courseDescription">
+              Course Description
+            </label>
             <textarea
               className="bg-[#131237] p-1 rounded"
               cols={20}
               rows={4}
-              name=""
-              id="name"
+              id="courseDescription"
               placeholder="Course Description"
               required
               value={courseInfo.description}
@@ -88,12 +97,13 @@ const CourseInfo: FC<Props> = ({
           </div>
           <div className="w-full lg:flex justify-between items-center gap-3">
             <div className="flex flex-col w-full">
-              <label htmlFor="">Price</label>
+              <label className="text-left" htmlFor="coursePrice">
+                Price
+              </label>
               <input
                 className="bg-[#131237] rounded p-1 w-full"
                 type="number"
-                name=""
-                id="name"
+                id="coursePrice"
                 placeholder="Course Price"
                 required
                 value={courseInfo.price}
@@ -103,14 +113,14 @@ const CourseInfo: FC<Props> = ({
               />
             </div>
             <div className="flex flex-col w-full">
-              <label htmlFor="">estimate Price </label>
+              <label className="text-left" htmlFor="courseEstimatePrice">
+                Estimate Price (Optional)
+              </label>
               <input
-                className="bg-[#131237] rounded p-1 "
+                className="bg-[#131237] rounded p-1"
                 type="number"
-                name=""
-                id="name"
-                placeholder="Course estimatePrice"
-                required
+                id="courseEstimatePrice"
+                placeholder="Course Estimate Price"
                 value={courseInfo.estimatePrice}
                 onChange={(e: any) =>
                   setCourseInfo({
@@ -122,11 +132,12 @@ const CourseInfo: FC<Props> = ({
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="">Course Tags</label>
+            <label className="text-left" htmlFor="courseTags">
+              Course Tags
+            </label>
             <input
               className="bg-[#131237] p-1 rounded"
-              name=""
-              id="name"
+              id="courseTags"
               placeholder="Course Tags"
               required
               value={courseInfo.tags}
@@ -137,28 +148,31 @@ const CourseInfo: FC<Props> = ({
           </div>
           <div className="w-full lg:flex justify-between items-center gap-3">
             <div className="flex flex-col w-full">
-              <label htmlFor="">Course Level</label>
-              <input
-                className="bg-[#131237] rounded p-1 w-full"
-                type="text"
-                name=""
-                id="name"
-                placeholder="Course level"
-                required
+              <label className="text-left" htmlFor="courseLevel">
+                Course Level
+              </label>
+              <select
+                className="bg-[#131237] rounded p-1"
+                id="courseLevel"
                 value={courseInfo.level}
                 onChange={(e: any) =>
                   setCourseInfo({ ...courseInfo, level: e.target.value })
                 }
-              />
+              >
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+              </select>
             </div>
             <div className="flex flex-col w-full">
-              <label htmlFor="">DemoUrl </label>
+              <label className="text-left" htmlFor="demoUrl">
+                Demo URL
+              </label>
               <input
-                className="bg-[#131237] rounded p-1 "
+                className="bg-[#131237] rounded p-1"
                 type="text"
-                name=""
-                id="name"
-                placeholder="Demo Url"
+                id="demoUrl"
+                placeholder="Demo URL"
                 required
                 value={courseInfo.demoUrl}
                 onChange={(e: any) =>
@@ -173,11 +187,11 @@ const CourseInfo: FC<Props> = ({
               accept="image/*"
               id="file"
               className="hidden"
-              onChange={handelFile}
+              onChange={handleFile}
             />
             <label
               htmlFor="file"
-              onDragLeave={handleDragleave}
+              onDragLeave={handleDragLeave}
               onDragOver={handleDragOver}
               onDrop={handleDrop}
             >
@@ -196,7 +210,7 @@ const CourseInfo: FC<Props> = ({
             <input
               type="submit"
               value={"Next"}
-              className=" bg-blue-700 cursor-pointer text-white rounded px-4 hover:bg-purple-950 duration-300 w-fit"
+              className="bg-blue-700 cursor-pointer text-white rounded px-4 hover:bg-purple-950 duration-300 w-fit"
             />
           </div>
         </form>

@@ -106,7 +106,7 @@ const CourseContent: FC<Props> = ({
       <h1 className="text-center mt-3 lg:hidden">Course Content</h1>
       <Toaster />
 
-      <form onSubmit={handelSubmit} className="mt-20">
+      <form onSubmit={handelSubmit} className="mt-10">
         <div className="">
           {courseContentData.map((course: any, i: number) => (
             <div
@@ -183,7 +183,7 @@ const CourseContent: FC<Props> = ({
                           placeholder="Link Title"
                           onChange={(e) => {
                             const allCourse = [...courseContentData];
-                            allCourse[i].links[linkIndex].title =
+                            allCourse[i].linksUrl[linkIndex].title =
                               e.target.value;
                             setCourseContentData(allCourse);
                           }}
@@ -321,10 +321,16 @@ const CourseContent: FC<Props> = ({
         <h1> Add New Module</h1>
       </div>
       <div className="flex items-center justify-between my-3">
-        <div onClick={() => setActive(active - 1)} className="">
+        <div
+          className=" bg-blue-700 cursor-pointer  text-white rounded px-4 hover:bg-purple-950 duration-300 w-fit"
+          onClick={() => setActive(active - 1)}
+        >
           Pre
         </div>
-        <div onClick={handelNext} className="">
+        <div
+          className=" bg-blue-700 cursor-pointer  text-white rounded px-4 hover:bg-purple-950 duration-300 w-fit"
+          onClick={handelNext}
+        >
           Next
         </div>
       </div>

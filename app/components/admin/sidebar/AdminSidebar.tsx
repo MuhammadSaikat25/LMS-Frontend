@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CiMenuFries } from "react-icons/ci";
+
 const AdminSidebar = () => {
   const currentPath = usePathname();
   const [openSidebar, setOpeSideBar] = useState(false);
@@ -15,6 +16,7 @@ const AdminSidebar = () => {
       }
     }
   };
+
   return (
     <div className=" lg:bg-[#170F21] lg:h-full w-full">
       <div className="hidden bg-[#170F21] h-full overflow-scroll overflow-y-auto overflow-x-hidden lg:flex flex-col items-center">
@@ -35,7 +37,14 @@ const AdminSidebar = () => {
           <div className="">
             <h1>Data</h1>
             <div className="">
-              <h1>User</h1>
+              <Link
+                className={`${
+                  currentPath === "/admin/users" && "text-[#8C35EC]"
+                }`}
+                href={"/admin/users"}
+              >
+                Users
+              </Link>
               <h1>Invoice</h1>
             </div>
           </div>
@@ -45,13 +54,36 @@ const AdminSidebar = () => {
             <div className="">
               <Link
                 className={`${
-                  currentPath === "/admin/create-course" && "bg-red-600"
+                  currentPath === "/admin/create-course" && "text-[#8C35EC]"
                 }`}
                 href={"/admin/create-course"}
               >
                 Create Course
               </Link>
-              <h1>Live Course</h1>
+            </div>
+            <div className="">
+              <Link
+                className={`${
+                  currentPath === "/admin/courses" && "text-[#8C35EC]"
+                }`}
+                href={"/admin/courses"}
+              >
+                All Courses
+              </Link>
+            </div>
+          </div>
+          {/* ---------- Controllers */}
+          <div className="">
+            <h1>Controllers</h1>
+            <div className="flex flex-col gap-3">
+              <Link
+                href={"/admin/manage-team"}
+                className={`${
+                  currentPath === "/admin/manage-team" && "text-[#8C35EC]"
+                }`}
+              >
+                Manage Team
+              </Link>
             </div>
           </div>
           {/* --------------- Customization ------------ */}
