@@ -3,35 +3,35 @@ import { CgClose } from "react-icons/cg";
 import { IoAddCircle } from "react-icons/io5";
 
 type Props = {
-  benefits: { title: string }[];
-  prerequisites: { title: string }[];
-  setBenefits: (benefits: { title: string }[]) => void;
+  benefit: { title: string }[];
+  prerequisite: { title: string }[];
+  setBenefit: (benefit: { title: string }[]) => void;
   setPrerequisites: (prerequisites: { title: string }[]) => void;
   active: number;
   setActive: (active: number) => void;
 };
-
+  
 const CourseData: FC<Props> = ({
   active,
-  benefits,
-  prerequisites,
+  benefit,
+  prerequisite,
   setActive,
-  setBenefits,
+  setBenefit,
   setPrerequisites,
 }) => {
   const handelBenefits = (i: number, title: string) => {
-    const updateBenefits = [...benefits];
+    const updateBenefits = [...benefit];
     updateBenefits[i].title = title;
-    setBenefits(updateBenefits);
+    setBenefit(updateBenefits);
   };
   const handelPrerequisites = (i: number, title: string) => {
-    const updatePrerequisites = [...prerequisites];
+    const updatePrerequisites = [...prerequisite];
     updatePrerequisites[i].title = title;
     setPrerequisites(updatePrerequisites);
   };
   const deleteInput = (i: number) => {
-    if (prerequisites.length > 1) {
-      const filterInput = prerequisites.filter((v, index) => index !== i);
+    if (prerequisite.length > 1) {
+      const filterInput = prerequisite.filter((v, index) => index !== i);
       setPrerequisites(filterInput);
     }
   };
@@ -42,7 +42,7 @@ const CourseData: FC<Props> = ({
       <div className="w-[80%] m-auto block bg-[#080826] p-4 mt-4">
         <div className="flex flex-col gap-2">
           <label htmlFor=""> Benefits of this course</label>
-          {benefits.map((benefit: any, i: number) => (
+          {benefit.map((benefit: any, i: number) => (
             <input
               className="bg-[#131237] rounded p-1"
               type="text"
@@ -56,20 +56,20 @@ const CourseData: FC<Props> = ({
           ))}
           <IoAddCircle
             className="cursor-pointer"
-            onClick={() => setBenefits([...benefits, { title: "" }])}
+            onClick={() => setBenefit([...benefit, { title: "" }])}
           />
         </div>
         <div className="flex flex-col gap-2 mt-2">
           <label htmlFor="email"> Prerequisites of this course</label>
-          {prerequisites.map((prerequisites: any, i: number) => (
+          {prerequisite.map((prerequisite: any, i: number) => (
             <div key={i} className="w-full flex items-center gap-2">
               <input
                 className="bg-[#131237] rounded p-1 w-full"
                 type="text"
                 required
-                name="prerequisites"
+                name="prerequisite"
                 placeholder="You need to know JS"
-                value={prerequisites.title}
+                value={prerequisite.title}
                 onChange={(e) => handelPrerequisites(i, e.target.value)}
               />
               <CgClose
@@ -80,7 +80,7 @@ const CourseData: FC<Props> = ({
           ))}
           <IoAddCircle
             className="cursor-pointer"
-            onClick={() => setPrerequisites([...prerequisites, { title: "" }])}
+            onClick={() => setPrerequisites([...prerequisite, { title: "" }])}
           />
         </div>
         <div className="flex items-center gap-2 justify-between mt-3">

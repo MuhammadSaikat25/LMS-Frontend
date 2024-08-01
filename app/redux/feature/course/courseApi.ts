@@ -10,12 +10,27 @@ const courseApi = baseApi.injectEndpoints({
         credentials: "include",
       }),
     }),
-    getAllCourse:builder.query({
-      query:()=>({
-        url:"course",
-        method:"GET"
-      })
-    })
+    getAllCourse: builder.query({
+      query: () => ({
+        url: "course",
+        method: "GET",
+      }),
+    }),
+    updateCourse: builder.mutation({
+      query: ({ id, updateData }) => {
+        console.log(id,"api")
+        return {
+          url: `update-course/${id}`,
+          method: "PUT",
+          body: updateData,
+          credentials: "include",
+        };
+      },
+    }),
   }),
 });
-export const { useCreateCourseMutation,useGetAllCourseQuery } = courseApi;
+export const {
+  useCreateCourseMutation,
+  useGetAllCourseQuery,
+  useUpdateCourseMutation,
+} = courseApi;

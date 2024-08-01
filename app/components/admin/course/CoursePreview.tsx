@@ -6,6 +6,7 @@ interface Props {
   setActive: (active: number) => void;
   courseData: any;
   handelCourseCreate: any;
+  updateCourse: boolean;
 }
 
 const CoursePreview: FC<Props> = ({
@@ -13,6 +14,7 @@ const CoursePreview: FC<Props> = ({
   courseData,
   handelCourseCreate,
   setActive,
+  updateCourse,
 }) => {
   const [demoVideoLoading, setDemoVideoLoading] = useState(true);
   const [demoVideoError, setDemoVideoError] = useState<string | null>(null);
@@ -41,7 +43,7 @@ const CoursePreview: FC<Props> = ({
             pre
           </div>
           <div onClick={() => createCourse()} className="">
-            create course
+            {updateCourse ? <p>update</p> : <p>create course</p>}
           </div>
         </div>
       </div>

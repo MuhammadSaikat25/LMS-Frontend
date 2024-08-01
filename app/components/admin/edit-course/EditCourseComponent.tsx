@@ -1,17 +1,27 @@
-import React, { useEffect, useState } from "react";
-import CourseOption from "./CourseOption";
-import CourseInfo from "./CourseInfo";
-import CourseData from "./CourseData";
-import CourseContent from "./CourseContent";
-import CoursePreview from "./CoursePreview";
-import { useCreateCourseMutation } from "@/app/redux/feature/course/courseApi";
+import React, { FC, useEffect, useState } from "react";
+import {
+  useGetAllCourseQuery,
+  useUpdateCourseMutation,
+} from "@/app/redux/feature/course/courseApi";
 import toast, { Toaster } from "react-hot-toast";
+import CourseInfo from "../course/CourseInfo";
+import CourseData from "../course/CourseData";
+import CourseContent from "../course/CourseContent";
+import CoursePreview from "../course/CoursePreview";
+import CourseOption from "../course/CourseOption";
 import { useRouter } from "next/navigation";
 
-const CreateCourseComponent = () => {
-  const router=useRouter()
-  const [createCourse, { data, error, isLoading, isSuccess }] =
-    useCreateCourseMutation();
+type Props = {
+  id: string;
+};
+const EditCourseComponent: FC<Props> = ({ id }) => {
+  const router = useRouter();
+  const { data: allCourse,refetch } = useGetAllCourseQuery(undefined);
+  const [updateCourse, { isSuccess, data }] = useUpdateCourseMutation();
+  const editCourseData = allCourse?.data.find(
+    (course: any) => course._id === id
+  );
+
   const [active, setActive] = useState(0);
   const [courseInfo, setCourseInfo] = useState({
     name: "",
@@ -81,24 +91,33 @@ const CreateCourseComponent = () => {
   };
   const handelCourseCreate = async (e: any) => {
     const course = courseData;
-    console.log(course)
-    if (!isLoading) {
-      await createCourse(courseData);
-      router.push('/admin/courses')
-    }
+    await updateCourse({ id: editCourseData._id, updateData: course });
   };
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Course create Successful");
+      toast.success("Course update Successful");
+      router.push("/admin/courses");
+    }
+  }, [data, isSuccess]);
 
+  useEffect(() => {
+    if (editCourseData) {
+      setCourseInfo({
+        name: editCourseData.name,
+        description: editCourseData.description,
+        price: editCourseData.price,
+        estimatePrice: editCourseData.estimatePrice,
+        tags: editCourseData.tags,
+        level: editCourseData.level,
+        demoUrl: editCourseData.demoUrl,
+        thumbnail: editCourseData.thumbnail,
+      });
+      setPrerequisites(editCourseData.prerequisite);
+      setBenefit(editCourseData.benefits);
+      setCourseContentData(editCourseData.courseContent);
     }
-    if (error) {
-      if ("data" in error) {
-        const err = error as any;
-        toast.error(err.data.message);
-      }
-    }
-  }, [error, isLoading, isSuccess]);
+    refetch()
+  }, [editCourseData]);
 
   return (
     <div className=" w-full flex justify-between min-h-screen ">
@@ -136,7 +155,7 @@ const CreateCourseComponent = () => {
             setActive={setActive}
             courseData={courseData}
             handelCourseCreate={handelCourseCreate}
-            updateCourse={false}
+            updateCourse={true}
           />
         )}
       </div>
@@ -148,4 +167,4 @@ const CreateCourseComponent = () => {
   );
 };
 
-export default CreateCourseComponent;
+export default EditCourseComponent;

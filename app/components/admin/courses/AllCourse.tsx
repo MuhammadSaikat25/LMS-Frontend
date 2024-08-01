@@ -9,21 +9,25 @@ import Paper from "@mui/material/Paper";
 import { MdDeleteForever } from "react-icons/md";
 import { MdModeEditOutline } from "react-icons/md";
 import { useGetAllCourseQuery } from "@/app/redux/feature/course/courseApi";
-import {format} from 'timeago.js'
-
-
+import { format } from "timeago.js";
+import Link from "next/link";
 
 const AllCourse = () => {
-  const {data}=useGetAllCourseQuery(undefined)
-  const [course,steCourse]=React.useState([])
-  React.useEffect(()=>{
-    steCourse(data?.data)
-  },[data?.data])
- 
+  const { data } = useGetAllCourseQuery(undefined);
+  const [course, steCourse] = React.useState([]);
+  React.useEffect(() => {
+    steCourse(data?.data);
+  }, [data?.data]);
+
   return (
     <div>
       <TableContainer
-        sx={{ width: "1000px", margin: "auto", height: "500px", background:'#080826' }}
+        sx={{
+          width: "1000px",
+          margin: "auto",
+          height: "500px",
+          background: "#080826",
+        }}
         component={Paper}
       >
         <Table aria-label="simple table">
@@ -51,29 +55,39 @@ const AllCourse = () => {
             </TableRow>
           </TableHead>
           <TableBody className="bg-[#131237] p-1">
-            {course?.map((course:any) => (
+            {course?.map((course: any) => (
               <TableRow
                 key={course._id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell title={course._id} sx={{ color: "white" }} component="th" scope="row">
-                  {course._id.slice(0,7)}
+                <TableCell
+                  title={course._id}
+                  sx={{ color: "white" }}
+                  component="th"
+                  scope="row"
+                >
+                  {course._id.slice(0, 7)}
                 </TableCell>
-                <TableCell title={course.name} sx={{ color: "white" }} align="right">
-                  {course.name.slice(0,15)}...
-                  
+                <TableCell
+                  title={course.name}
+                  sx={{ color: "white" }}
+                  align="right"
+                >
+                  {course.name.slice(0, 15)}...
                 </TableCell>
                 <TableCell sx={{ color: "white" }} align="right">
                   {course.ratings}
                 </TableCell>
                 <TableCell sx={{ color: "white" }} align="right">
-                  {format(course.purchased)}
+                  {course.purchased}
                 </TableCell>
                 <TableCell sx={{ color: "white" }} align="right">
-                  {course.createdAt}
+                  {format(course.createdAt)}
                 </TableCell>
                 <TableCell sx={{ color: "white" }} align="right">
-                  <MdModeEditOutline />
+                  <Link href={`/admin/edit-course/${course._id}`}>
+                    <MdModeEditOutline />
+                  </Link>
                 </TableCell>
                 <TableCell sx={{ color: "white" }} align="right">
                   <MdDeleteForever />

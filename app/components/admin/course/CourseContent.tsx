@@ -35,7 +35,6 @@ const CourseContent: FC<Props> = ({
   };
 
   const handleVideoCollapseToggle = (index: number) => {
-    console.log(index);
     const newCollapsedVideos = [...collapsedVideos];
     newCollapsedVideos[index] = !newCollapsedVideos[index];
 
@@ -101,6 +100,7 @@ const CourseContent: FC<Props> = ({
     setActive(active + 1);
     handelCourseSubmit();
   };
+
   return (
     <div className=" w-[80%] mx-auto">
       <h1 className="text-center mt-3 lg:hidden">Course Content</h1>
@@ -108,7 +108,7 @@ const CourseContent: FC<Props> = ({
 
       <form onSubmit={handelSubmit} className="mt-10">
         <div className="">
-          {courseContentData.map((course: any, i: number) => (
+          {courseContentData?.map((course: any, i: number) => (
             <div
               key={i}
               className={`${
@@ -206,7 +206,9 @@ const CourseContent: FC<Props> = ({
                   {!collapsedLinks[i] && (
                     <div
                       onClick={() => {
-                        const allCourse = [...courseContentData];
+                        const allCourse = JSON.parse(
+                          JSON.stringify(courseContentData)
+                        );
                         allCourse[i].linksUrl.push({ title: "", url: "" });
                         setCourseContentData(allCourse);
                       }}
@@ -292,7 +294,9 @@ const CourseContent: FC<Props> = ({
                   {!collapsedVideos[i] && (
                     <div
                       onClick={() => {
-                        const allCourse = [...courseContentData];
+                        const allCourse = JSON.parse(
+                          JSON.stringify(courseContentData)
+                        );
                         allCourse[i].videos.push({ title: "", url: "" });
                         setCourseContentData(allCourse);
                       }}

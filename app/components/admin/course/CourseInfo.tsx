@@ -56,7 +56,7 @@ const CourseInfo: FC<Props> = ({
       reader.readAsDataURL(file);
     }
   };
-
+  console.log(courseInfo.level)
   return (
     <div className="mt-[30px] text-center">
       <h1 className="mb-5 font-m">Course Information</h1>
