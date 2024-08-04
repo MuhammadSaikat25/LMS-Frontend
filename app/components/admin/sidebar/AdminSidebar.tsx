@@ -88,8 +88,8 @@ const AdminSidebar = () => {
           </div>
           {/* --------------- Customization ------------ */}
           <div className="flex flex-col gap-3">
-            <Link href={"/"}>Hero</Link>
-            <Link href={"/"}>FAQ</Link>
+            <Link href={"/admin/hero"}>Hero</Link>
+            <Link href={"/admin/faq"}>FAQ</Link>
             <Link href={"/"}>categories</Link>
           </div>
         </div>

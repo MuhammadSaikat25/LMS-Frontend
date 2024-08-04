@@ -9,7 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 const CreateCourseComponent = () => {
-  const router=useRouter()
+  const router = useRouter();
   const [createCourse, { data, error, isLoading, isSuccess }] =
     useCreateCourseMutation();
   const [active, setActive] = useState(0);
@@ -23,6 +23,7 @@ const CreateCourseComponent = () => {
     demoUrl: "",
     thumbnail: "",
   });
+
   const [benefit, setBenefit] = useState([{ title: "" }]);
   const [prerequisites, setPrerequisites] = useState([{ title: "" }]);
   const [courseContentData, setCourseContentData] = useState([
@@ -64,6 +65,7 @@ const CreateCourseComponent = () => {
         url: video.url,
       })),
     }));
+
     const data = {
       name: courseInfo.name,
       description: courseInfo.description,
@@ -72,7 +74,7 @@ const CreateCourseComponent = () => {
       tags: courseInfo.tags,
       level: courseInfo.level,
       demoUrl: courseInfo.demoUrl,
-      thumbnail: "",
+      thumbnail: courseInfo.thumbnail,
       benefits,
       prerequisite,
       courseContent,
@@ -80,17 +82,14 @@ const CreateCourseComponent = () => {
     setCourseData(data);
   };
   const handelCourseCreate = async (e: any) => {
-    const course = courseData;
-    console.log(course)
     if (!isLoading) {
       await createCourse(courseData);
-      router.push('/admin/courses')
+      router.push("/admin/courses");
     }
   };
   useEffect(() => {
     if (isSuccess) {
       toast.success("Course create Successful");
-
     }
     if (error) {
       if ("data" in error) {

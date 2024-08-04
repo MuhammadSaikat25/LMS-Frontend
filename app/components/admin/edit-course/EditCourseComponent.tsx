@@ -16,7 +16,7 @@ type Props = {
 };
 const EditCourseComponent: FC<Props> = ({ id }) => {
   const router = useRouter();
-  const { data: allCourse,refetch } = useGetAllCourseQuery(undefined);
+  const { data: allCourse, refetch } = useGetAllCourseQuery(undefined);
   const [updateCourse, { isSuccess, data }] = useUpdateCourseMutation();
   const editCourseData = allCourse?.data.find(
     (course: any) => course._id === id
@@ -116,7 +116,7 @@ const EditCourseComponent: FC<Props> = ({ id }) => {
       setBenefit(editCourseData.benefits);
       setCourseContentData(editCourseData.courseContent);
     }
-    refetch()
+    refetch();
   }, [editCourseData]);
 
   return (

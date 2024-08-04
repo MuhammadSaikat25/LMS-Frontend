@@ -20,10 +20,9 @@ const Login = () => {
     e.preventDefault();
 
     const res = await login({ email, password });
-   
-    // const user = await verifyToken(res.data.token || "");
+    const user = await verifyToken(res.data.token || "");
+    dispatch(setUser({ user, token: res?.data?.token }));
     router.push("/");
-    dispatch(setUser({ user:{}, token: res?.data?.token }));
   };
 
   return (
@@ -37,7 +36,7 @@ const Login = () => {
         </h1>
         <div className="flex flex-col gap-6">
           <input
-          defaultValue={"123@gmail.com"}
+            defaultValue={"123@gmail.com"}
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             className="bg-[#131237] rounded-md p-2 md:w-[300px] lg:w-[400px]"
@@ -46,7 +45,7 @@ const Login = () => {
           />
           <input
             type="password"
-            defaultValue={'123456'}
+            defaultValue={"123456"}
             onChange={(e) => setPassword(e.target.value)}
             className="bg-[#131237] rounded-md p-2 lg:w-[400px]"
             placeholder="Password"

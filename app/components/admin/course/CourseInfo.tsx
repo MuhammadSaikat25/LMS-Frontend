@@ -1,5 +1,6 @@
 "use client";
-import { FC, useState } from "react";
+import useAxiosPublic from "@/app/utils/axiosPublic";
+import { FC } from "react";
 
 type Props = {
   courseInfo: any;
@@ -14,14 +15,13 @@ const CourseInfo: FC<Props> = ({
   setActive,
   setCourseInfo,
 }) => {
-  const [dragging, setDragging] = useState(false);
-
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setActive(active + 1);
   };
+  const imageBB = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGEBB}`;
 
-  const handleFile = (e: any) => {
+  const handleFile = async (e: any) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -31,32 +31,28 @@ const CourseInfo: FC<Props> = ({
         }
       };
       reader.readAsDataURL(file);
+
+      const axiosPublic = useAxiosPublic();
+
+      const formData = new FormData();
+      formData.append("image", file);
+
+      try {
+        const postImageRes = await axiosPublic.post(imageBB, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        if (postImageRes) {
+          setCourseInfo({
+            ...courseInfo,
+            thumbnail: postImageRes.data.data.url,
+          });
+        }
+      } catch (error) {}
     }
   };
 
-  const handleDragOver = (e: any) => {
-    e.preventDefault();
-    setDragging(true);
-  };
-
-  const handleDragLeave = (e: any) => {
-    e.preventDefault();
-    setDragging(false);
-  };
-
-  const handleDrop = (e: any) => {
-    e.preventDefault();
-    setDragging(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setCourseInfo({ ...courseInfo, thumbnail: reader.result });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-  console.log(courseInfo.level)
   return (
     <div className="mt-[30px] text-center">
       <h1 className="mb-5 font-m">Course Information</h1>
@@ -154,7 +150,7 @@ const CourseInfo: FC<Props> = ({
               <select
                 className="bg-[#131237] rounded p-1"
                 id="courseLevel"
-                value={courseInfo.level}
+                value={courseInfo.level || 'beginner'}
                 onChange={(e: any) =>
                   setCourseInfo({ ...courseInfo, level: e.target.value })
                 }
@@ -189,12 +185,7 @@ const CourseInfo: FC<Props> = ({
               className="hidden"
               onChange={handleFile}
             />
-            <label
-              htmlFor="file"
-              onDragLeave={handleDragLeave}
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
-            >
+            <label htmlFor="file">
               Upload Image
               {courseInfo.thumbnail && (
                 <img

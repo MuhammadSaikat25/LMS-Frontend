@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { MdDeleteForever } from "react-icons/md";
 import { MdMarkEmailRead } from "react-icons/md";
-import {format} from 'timeago.js'
+import { format } from "timeago.js";
 import { useGetAllUserQuery } from "@/app/redux/feature/user/userApi";
 import ManageTeam from "./ManageTeam";
 
@@ -17,7 +17,7 @@ type Props = {
 };
 
 const AllUsers: React.FC<Props> = ({ role }) => {
-  const { data,refetch } = useGetAllUserQuery(undefined);
+  const { data, refetch } = useGetAllUserQuery(undefined);
   const [user, steUser] = React.useState([]);
   const [modal, setModal] = React.useState(false);
 
@@ -29,7 +29,7 @@ const AllUsers: React.FC<Props> = ({ role }) => {
       steUser(data?.data);
     }
   }, [data?.data]);
-
+  console.log(user);
   return (
     <div className="lg:w-[80%] mx-auto lg:mt-10">
       {role && (
