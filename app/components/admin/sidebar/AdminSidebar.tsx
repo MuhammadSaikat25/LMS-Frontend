@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import defaultAvatar from "../../../../public/Avatar-Profile-Vector.png";
 import Image from "next/image";
@@ -16,7 +17,7 @@ const AdminSidebar = () => {
       }
     }
   };
-
+  
   return (
     <div className=" lg:bg-[#170F21] lg:h-full w-full">
       <div className="hidden bg-[#170F21] h-full overflow-scroll overflow-y-auto overflow-x-hidden lg:flex flex-col items-center">
@@ -32,11 +33,18 @@ const AdminSidebar = () => {
         <h1>Admin</h1>
 
         <div className="flex flex-col gap-3">
-          <h1>Dashboard</h1>
+          <Link
+            className={`${
+              currentPath === "/admin" && "text-[#8C35EC]"
+            }`}
+            href={"/admin"}
+          >
+           Dashboard
+          </Link>
           {/* ------------- Data ------------ */}
           <div className="">
             <h1>Data</h1>
-            <div className="">
+            <div className="flex flex-col gap-1">
               <Link
                 className={`${
                   currentPath === "/admin/users" && "text-[#8C35EC]"
@@ -45,7 +53,9 @@ const AdminSidebar = () => {
               >
                 Users
               </Link>
-              <h1>Invoice</h1>
+              <Link  href={'/admin/lnvoice'} className={`${
+                  currentPath === "/admin/lnvoice" && "text-[#8C35EC]"
+                }`}>Invoice</Link>
             </div>
           </div>
           {/* ---------  Content ------------- */}
@@ -91,6 +101,12 @@ const AdminSidebar = () => {
             <Link href={"/admin/hero"}>Hero</Link>
             <Link href={"/admin/faq"}>FAQ</Link>
             <Link href={"/"}>categories</Link>
+          </div>
+          {/* Analytics */}
+          <div className="flex flex-col gap-3">
+            <Link href={"/admin/course-analytics"}>Course-analytics</Link>
+            <Link href={"/admin/order-analytics"}>Order-analytics</Link>
+            <Link href={"/admin/user-analytics"}>User-analytics</Link>
           </div>
         </div>
       </div>

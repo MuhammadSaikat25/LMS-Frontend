@@ -12,7 +12,7 @@ import verifyToken from "../utils/verifyToken";
 const Login = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [email, setEmail] = useState("123@gmail.com");
+  const [email, setEmail] = useState("minhajulsaikat008@gmail.com");
   const [password, setPassword] = useState("123456");
   const [login] = useLoginMutation();
 
@@ -36,7 +36,7 @@ const Login = () => {
         </h1>
         <div className="flex flex-col gap-6">
           <input
-            defaultValue={"123@gmail.com"}
+           value={email}
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             className="bg-[#131237] rounded-md p-2 md:w-[300px] lg:w-[400px]"
