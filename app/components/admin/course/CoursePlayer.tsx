@@ -4,14 +4,14 @@ import axios from "axios";
 interface Props {
   title: string;
   demoUrl: string;
-  demoVideoError: string | null;
-  demoVideoLoading: boolean;
+  demoVideoError?: string | null;
+  demoVideoLoading?: boolean;
   setDemoVideoError: (demoVideoError: string | null) => void;
   setDemoVideoLoading: (demoVideoLoading: boolean) => void;
 }
 
 const CoursePlayer: FC<Props> = ({
-  title,
+  
   demoUrl,
 
   setDemoVideoError,
@@ -35,11 +35,15 @@ const CoursePlayer: FC<Props> = ({
         );
         setVideoData(res.data);
       } catch (err) {
-        setDemoVideoError("Failed to fetch video data");
-        setError("Failed to fetch video data");
+        if (setDemoVideoError) {
+          setDemoVideoError("Failed to fetch video data");
+          setError("Failed to fetch video data");
+        }
       } finally {
-        setLoading(false);
-        setDemoVideoLoading(false);
+        if (setDemoVideoLoading) {
+          setLoading(false);
+          setDemoVideoLoading(false);
+        }
       }
     };
 
@@ -55,7 +59,7 @@ const CoursePlayer: FC<Props> = ({
   }
 
   return (
-    <div className="w-[70%] mx-auto mt-14">
+    <div className=" mx-auto mt-14">
       {videoData.otp && videoData.playbackInfo && (
         <div style={{ paddingTop: "41%", position: "relative" }}>
           <iframe

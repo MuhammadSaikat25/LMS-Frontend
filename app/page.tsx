@@ -2,6 +2,7 @@
 import { FC, useState } from "react";
 import Heading from "./utils/Heading";
 import Header from "./components/Header";
+import Course from "./components/home/course/Course";
 
 interface Props {}
 const page: FC<Props> = (props) => {
@@ -16,6 +17,7 @@ const page: FC<Props> = (props) => {
         keyword="programming"
       />
       <Header />
+      <Course/>
     </div>
   );
 };
