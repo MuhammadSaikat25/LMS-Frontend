@@ -36,7 +36,7 @@ const Login = () => {
         </h1>
         <div className="flex flex-col gap-6">
           <input
-           value={email}
+            value={email}
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             className="bg-[#131237] rounded-md p-2 md:w-[300px] lg:w-[400px]"

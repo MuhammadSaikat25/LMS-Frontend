@@ -11,8 +11,44 @@ const orderApi = baseApi.injectEndpoints({
         };
       },
     }),
-   
+    getStripePk: builder.query({
+      query: () => {
+        return {
+          url: "payment/stripePk",
+          method: "GET",
+          credentials: "include",
+        };
+      },
+    }),
+    cratePayment: builder.mutation({
+      query: (amount) => {
+        return {
+          url: "payment",
+          method: "POST",
+          body: amount,
+          credentials: "include",
+        };
+      },
+    }),
+    crateOrder: builder.mutation({
+      query: ({ courseId, paymentInfo }) => {
+        return {
+          url: "order",
+          method: "POST",
+          body: {
+            courseId,
+            paymentInfo,
+          },
+          credentials: "include",
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetAllOrdersQuery} = orderApi;
+export const {
+  useGetAllOrdersQuery,
+  useCratePaymentMutation,
+  useGetStripePkQuery,
+  useCrateOrderMutation,
+} = orderApi;
