@@ -49,8 +49,8 @@ const CourseContentPage: FC<Props> = ({ courseContent }) => {
               </div>
               {visibleModuleIndex === index && (
                 <div className="mt-1 mb-1">
-                  {video.videos.map((vi: any) => (
-                    <div className="flex items-center gap-2">
+                  {video.videos.map((vi: any,i:number) => (
+                    <div key={i} className="flex items-center gap-2">
                       <span>
                         <FaVideo size={10} />
                       </span>

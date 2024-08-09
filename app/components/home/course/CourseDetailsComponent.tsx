@@ -9,7 +9,7 @@ import { useGetAllUserQuery } from "@/app/redux/feature/user/userApi";
 import CourseContentPage from "./CourseContentPage";
 import { Elements } from "@stripe/react-stripe-js";
 import PaymentForm from "./PaymentForm";
-import Link from "next/link";
+
 import { toast, Toaster } from "react-hot-toast";
 
 type Props = {
@@ -57,8 +57,8 @@ const CourseDetailsComponent: FC<Props> = ({ clientSecret, stripePromise }) => {
           <h1 className="text-[20px] font-Poppins">
             What you will learn from this Course ?
           </h1>
-          {course?.benefits.map((benefit: any) => (
-            <div className="flex items-center gap-2">
+          {course?.benefits.map((benefit: any,i:any) => (
+            <div key={i} className="flex items-center gap-2">
               <span>
                 <IoCheckmarkDoneSharp />
               </span>
@@ -71,8 +71,8 @@ const CourseDetailsComponent: FC<Props> = ({ clientSecret, stripePromise }) => {
           <h1 className="text-[20px] font-Poppins">
             What are the prerequisites of this Course ?
           </h1>
-          {course?.prerequisite.map((prerequisite: any) => (
-            <div className="flex items-center gap-2">
+          {course?.prerequisite.map((prerequisite: any,i:any) => (
+            <div key={i} className="flex items-center gap-2">
               <span>
                 <IoCheckmarkDoneSharp />
               </span>

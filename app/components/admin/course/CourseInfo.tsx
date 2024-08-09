@@ -1,5 +1,6 @@
 "use client";
-import useAxiosPublic from "@/app/utils/axiosPublic";
+import UseAxiosPublic from "@/app/utils/axiosPublic";
+
 import { FC } from "react";
 
 type Props = {
@@ -32,7 +33,7 @@ const CourseInfo: FC<Props> = ({
       };
       reader.readAsDataURL(file);
 
-      const axiosPublic = useAxiosPublic();
+      const axiosPublic = UseAxiosPublic();
 
       const formData = new FormData();
       formData.append("image", file);

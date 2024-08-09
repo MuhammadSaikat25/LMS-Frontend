@@ -12,9 +12,9 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
-  const [registration, { data }] = useRegistrationMutation();
+  const [registration] = useRegistrationMutation();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     await registration({ email, password, name });
     router.push("/login");
