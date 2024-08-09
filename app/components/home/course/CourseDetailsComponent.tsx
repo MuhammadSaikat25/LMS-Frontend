@@ -1,5 +1,5 @@
 import { useGetSingleCourseQuery } from "@/app/redux/feature/course/courseApi";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { FC, useEffect, useState } from "react";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import CoursePlayer from "../../admin/course/CoursePlayer";
@@ -9,21 +9,24 @@ import { useGetAllUserQuery } from "@/app/redux/feature/user/userApi";
 import CourseContentPage from "./CourseContentPage";
 import { Elements } from "@stripe/react-stripe-js";
 import PaymentForm from "./PaymentForm";
+import Link from "next/link";
+import { toast, Toaster } from "react-hot-toast";
+
 type Props = {
   clientSecret: any;
   stripePromise: any;
 };
 
 const CourseDetailsComponent: FC<Props> = ({ clientSecret, stripePromise }) => {
+  const router = useRouter();
   const { id } = useParams();
   const { data } = useGetSingleCourseQuery(id!, { skip: !id });
   const [course, setCourse] = useState<any>();
   const [open, setOpen] = useState(false);
   const User = useAppSelector((state: RootState) => state.auth.user);
   const { data: allUsers } = useGetAllUserQuery(undefined);
-  const loginUser = allUsers?.data.filter(
-    (user: any) => user.email === User!.email
-  );
+  const loginUser =
+    User && allUsers?.data.filter((user: any) => user.email === User?.email);
 
   let isCoursePurchased;
   if (loginUser) {
@@ -35,6 +38,7 @@ const CourseDetailsComponent: FC<Props> = ({ clientSecret, stripePromise }) => {
   useEffect(() => {
     setCourse(data?.data);
   }, [data]);
+
   const handelClose = (e: any) => {
     if (e.target.id === "screen") {
       {
@@ -44,6 +48,7 @@ const CourseDetailsComponent: FC<Props> = ({ clientSecret, stripePromise }) => {
   };
   return (
     <div className="flex justify-between px-20 ">
+      <Toaster />
       <div className="mt-4">
         <h1 className="font-Poppins text-xl">{course?.name}</h1>
         <h1>{course?.purchased} students purchased</h1>
@@ -88,15 +93,36 @@ const CourseDetailsComponent: FC<Props> = ({ clientSecret, stripePromise }) => {
             />
 
             {isCoursePurchased?.length ? (
-              <div className="">
-                <button className="bg-violet-600 px-3 rounded-2xl w-fit mt-4 hover:bg-purple-950 duration-300 font-Poppins">
+              <div className="mt-2">
+                <button
+                  onClick={() => {
+                    if (!User) {
+                      toast.error("Login first");
+                      setTimeout(() => {
+                        router.push("/login");
+                      }, 1000);
+                      return;
+                    }
+                    router.push(`/course-access/${course._id}`);
+                  }}
+                  className="bg-violet-600 px-3 rounded-2xl w-fit mt-4 hover:bg-purple-950 duration-300 font-Poppins"
+                >
                   Access To Course
                 </button>
               </div>
             ) : (
               <div className="">
                 <button
-                  onClick={() => setOpen(true)}
+                  onClick={() => {
+                    if (!User) {
+                      toast.error("Login first");
+                      setTimeout(() => {
+                        router.push("/login");
+                      }, 1000);
+                      return;
+                    }
+                    setOpen(true);
+                  }}
                   className="bg-violet-600 px-3 rounded-2xl w-fit mt-4 hover:bg-purple-950 duration-300 font-Poppins"
                 >
                   Buy now ${course.price}

@@ -1,6 +1,6 @@
 "use client";
 import AllCourse from "@/app/components/admin/courses/AllCourse";
-import DashboardHero from "@/app/components/admin/DashboardHero";
+
 import AdminSidebar from "@/app/components/admin/sidebar/AdminSidebar";
 import Heading from "@/app/utils/Heading";
 
@@ -18,8 +18,7 @@ const Course = () => {
             <AdminSidebar />
           </div>
           <div className="w-[85%] mx-auto mt-3 overflow-scroll lg:overflow-hidden">
-            {/* <DashboardHero /> */}
-            <AllCourse/>
+            <AllCourse />
           </div>
         </div>
       </div>

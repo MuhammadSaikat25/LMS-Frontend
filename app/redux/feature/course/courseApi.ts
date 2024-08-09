@@ -36,6 +36,7 @@ const courseApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    
     getSingleCourse: builder.query({
       query: (id) => ({
         url: `course/${id}`,

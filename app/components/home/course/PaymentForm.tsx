@@ -44,14 +44,13 @@ const PaymentForm = ({ course }: Props) => {
         courseId: course._id,
         paymentInfo: paymentIntent,
       });
+      refetch();
+      router.push(`/course-access/${course._id}`);
     }
     setIsLoading(false);
   };
   useEffect(() => {
-    if (orderData) {
-      router.push("/");
-      refetch();
-    }
+    
     if (error) {
       if ("data" in error) {
         const err = error as any;
